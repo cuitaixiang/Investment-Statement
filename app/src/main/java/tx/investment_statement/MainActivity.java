@@ -17,7 +17,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.v(TAG, "Hello world!");
+        if (savedInstanceState == null) {
+            Log.v(TAG, "Hello world!");
+        } else {
+            Log.v(TAG, savedInstanceState.getString("data"));
+        }
 
         Button button = (Button)findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -50,5 +54,12 @@ public class MainActivity extends AppCompatActivity {
             default:
         }
         return true;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i(TAG, "Before destroy.");
+        outState.putString("data", "I will be destroy.");
     }
 }
